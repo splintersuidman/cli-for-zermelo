@@ -32,7 +32,7 @@ school = "your-school"
 auth_code = "123 456 689 012"
 ```
 
-Now run the program with the flag `--config [your-config]`, replacing "[your-config]" with the path to yout config file.
+Now run the program with the flag `--config [your-config]`, replacing "[your-config]" with the path to your config file.
 This will get an access token, and it automatically sets it in your config file.
 Your config file will look something like the following now:
 ```toml
