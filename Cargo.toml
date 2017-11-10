@@ -1,0 +1,13 @@
+[package]
+authors = ["Splinter Suidman <splinter@mannenopdemaan.nl>"]
+name = "cli-for-zermelo"
+version = "0.1.0"
+
+[dependencies]
+chrono = "0.4.0"
+clap = "2.27.1"
+serde = "1.0.19"
+serde_derive = "1.0.19"
+termcolor = "0.3.3"
+toml = "0.4.5"
+zermelo = "0.1.8"
