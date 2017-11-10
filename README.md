@@ -64,3 +64,6 @@ You may want to set an alias to this.
     - long: `--config`
     - value: path
     - The location of the config file.
+
+# Disclaimer
+This program is not affiliated with Zermelo Software B.V. It only uses its API for retrieving a schedule.
