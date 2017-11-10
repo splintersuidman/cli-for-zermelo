@@ -2,7 +2,7 @@
 A command line application written in Rust that retrieves today's schedule from Zermelo.
 
 # Installation
-[Install Rust](https://rustup.rs). Then run the following in your terminal.
+[Install Rust](https://rustup.rs). Then run the following in your terminal:
 
 ```bash
 $ git clone https://github.com/splintah/cli-for-zermelo.git
