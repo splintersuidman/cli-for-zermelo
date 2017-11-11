@@ -71,21 +71,21 @@ impl Printer {
 
         // Subjects.
         if let Some(subjects) = appointment.subjects {
-            if subjects.len() > 0 {
+            if !subjects.is_empty() {
                 output.push_str(format!("Subjects: {}\n", subjects.as_slice().join(", ")).as_str());
             }
         }
 
         // Teachers.
         if let Some(teachers) = appointment.teachers {
-            if teachers.len() > 0 {
+            if !teachers.is_empty() {
                 output.push_str(format!("Teachers: {}\n", teachers.as_slice().join(", ")).as_str());
             }
         }
 
         // Locations.
         if let Some(locations) = appointment.locations {
-            if locations.len() > 0 {
+            if !locations.is_empty() {
                 output
                     .push_str(format!("Locations: {}\n", locations.as_slice().join(", ")).as_str());
             }
@@ -93,13 +93,13 @@ impl Printer {
 
         // Groups.
         if let Some(groups) = appointment.groups {
-            if groups.len() > 0 {
+            if !groups.is_empty() {
                 output.push_str(format!("Groups: {}\n", groups.as_slice().join(", ")).as_str());
             }
         }
 
         if let Some(remark) = appointment.remark {
-            if remark.len() > 0 {
+            if !remark.is_empty() {
                 output.push_str(format!("! {}\n", remark).as_str());
             }
         }
@@ -113,59 +113,41 @@ impl Printer {
                 appointment_type = AppointmentType::Other;
             }
         } else {
-            return Err("appointment type not set".to_owned());
+            appointment_type = AppointmentType::Other;
         }
 
-        // Color according to appointment type.
-        match appointment_type {
-            AppointmentType::Exam => {
-                match self.stdout
-                    .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)))
-                {
-                    Ok(_) => {}
-                    Err(e) => return Err(e.description().to_owned()),
-                };
-            }
-            _ => {}
-        };
+        let mut color: Color = Color::White;
+
+        // Yellow if exam.
+        if let AppointmentType::Exam = appointment_type {
+            color = Color::Yellow;
+        }
 
         // Yellow if moved or modified or new.
         if appointment.modified == Some(true) || appointment.new == Some(true)
             || appointment.moved == Some(true)
         {
-            match self.stdout
-                .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)))
-            {
-                Ok(_) => {}
-                Err(e) => return Err(e.description().to_owned()),
-            };
+            color = Color::Red;
         }
 
         // Red if cancelled.
         if appointment.cancelled == Some(true) {
-            match self.stdout
-                .set_color(ColorSpec::new().set_fg(Some(Color::Red)))
-            {
-                Ok(_) => {}
-                Err(e) => return Err(e.description().to_owned()),
-            };
+            color = Color::Red;
         }
 
         // Black if invalid.
         if appointment.valid == Some(false) {
-            match self.stdout
-                .set_color(ColorSpec::new().set_fg(Some(Color::Black)))
-            {
-                Ok(_) => {}
-                Err(e) => return Err(e.description().to_owned()),
-            };
+            color = Color::Black;
+        }
+
+        if let Err(e) = self.stdout.set_color(ColorSpec::new().set_fg(Some(color))) {
+            return Err(e.description().to_owned());
         }
 
         // Write to stdout.
-        match writeln!(&mut self.stdout, "{}", output) {
-            Ok(_) => {}
-            Err(e) => return Err(e.description().to_owned()),
-        };
+        if let Err(e) = writeln!(&mut self.stdout, "{}", output) {
+            return Err(e.description().to_owned());
+        }
 
         Ok(())
     }
