@@ -139,6 +139,11 @@ fn main() {
     // Get schedule.
     schedule.get_appointments(start, end).unwrap();
 
+    if schedule.appointments.len() == 0 {
+        println!("No appointments today. Go have some fun!");
+        return;
+    }
+
     // Print appointments.
     let mut printer = Printer::new();
     for appointment in schedule.appointments {
