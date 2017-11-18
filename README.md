@@ -44,26 +44,30 @@ When you want to run the program again, run it with the flag `--config [your-con
 You may want to set an alias to this.
 
 # Flags
-- authenticate:
-    - short: `-u`
-    - long: `--auth`
-    - value: string
-    - Authenticate with your code found in the Zermelo Portal (Koppelingen -> Koppel App). School has to be set. When you include spaces, wrap the code inside double brackets.
-- school:
-    - short: `-s`
-    - long: `--school`
-    - value: string
-    - The school identifier found in the Zermelo Portal (Koppelingen -> Koppel App).
-- access_token:
-    - short: `-a`
-    - long: `--accesstoken`
-    - value: string
-    - The access token retrieved with your authentication code.
-- config:
-    - short: `-c`
-    - long: `--config`
-    - value: path
-    - The location of the config file.
+This explanation of flags can also be obtained by passing the flag --help.
+
+```
+cli-for-zermelo 0.2.0
+Splinter Suidman
+A command line application that shows you your schedule from Zermelo.
+USAGE:
+    zermelo [FLAGS] [OPTIONS]
+FLAGS:
+        --help              Prints help information
+    -h, --hide_cancelled    Do not display cancelled appointments.
+    -i, --show_invalid      Show invalid appointments. These will be displayed in red.
+    -t, --tomorrow          Display tomorrow's schedule.
+    -V, --version           Prints version information
+    -y, --yesterday         Display yesterday's schedule.
+OPTIONS:
+    -a, --access_token <access token>    The access token retrieved with your authentication code.
+    -u, --auth <authentication code>     Authenticate with your code found in the Zermelo Portal (Koppelingen -> Koppel
+                                         App). School has to be set.
+    -c, --config <config file>           The location of the config file.
+    -f, --future <future day>            Display schedule from n days in the future.
+    -p, --past <past day>                Display schedule from n days in the past.
+    -s, --school <school>                The school identifier found in the Zermelo Portal (Koppelingen -> Koppel App).
+```
 
 # Disclaimer
 This program is not affiliated with Zermelo Software B.V. It only uses its API for retrieving a schedule.

@@ -7,16 +7,32 @@ use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 pub struct Printer {
     stdout: StandardStream,
+    hide_cancelled: bool,
+    show_invalid: bool,
 }
 
 impl Printer {
-    pub fn new() -> Self {
+    pub fn new(hide_cancelled: bool, show_invalid: bool) -> Self {
         Printer {
             stdout: StandardStream::stdout(ColorChoice::Always),
+            hide_cancelled,
+            show_invalid,
         }
     }
 
     pub fn print_appointment(&mut self, appointment: Appointment) -> Result<(), String> {
+        // Do not display appointment when it is cancelled, and we don't want to show cancelled
+        // appointments.
+        if appointment.cancelled == Some(true) && self.hide_cancelled {
+            return Ok(());
+        }
+
+        // Do not display appointment when it is invalid, and we do want to hide invalid
+        // appointments.
+        if appointment.valid == Some(false) && !self.show_invalid {
+            return Ok(());
+        }
+
         // Reset colors.
         match self.stdout.reset() {
             Ok(_) => {}
@@ -100,7 +116,7 @@ impl Printer {
 
         if let Some(remark) = appointment.remark {
             if !remark.is_empty() {
-                output.push_str(format!("! {}\n", remark).as_str());
+                output.push_str(format!("! {}\n", remark.replace("\n", " ")).as_str());
             }
         }
 
@@ -127,7 +143,7 @@ impl Printer {
         if appointment.modified == Some(true) || appointment.new == Some(true)
             || appointment.moved == Some(true)
         {
-            color = Color::Red;
+            color = Color::Yellow;
         }
 
         // Red if cancelled.
@@ -135,9 +151,9 @@ impl Printer {
             color = Color::Red;
         }
 
-        // Black if invalid.
+        // Red if invalid.
         if appointment.valid == Some(false) {
-            color = Color::Black;
+            color = Color::Red;
         }
 
         if let Err(e) = self.stdout.set_color(ColorSpec::new().set_fg(Some(color))) {
