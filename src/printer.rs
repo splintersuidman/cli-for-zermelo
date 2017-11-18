@@ -88,29 +88,36 @@ impl Printer {
         // Subjects.
         if let Some(subjects) = appointment.subjects {
             if !subjects.is_empty() {
-                output.push_str(format!("Subjects: {}\n", subjects.as_slice().join(", ")).as_str());
+                output.push_str(
+                    format!("Subjects: {}\n", subjects.as_slice().join(", ")).as_str(),
+                );
             }
         }
 
         // Teachers.
         if let Some(teachers) = appointment.teachers {
             if !teachers.is_empty() {
-                output.push_str(format!("Teachers: {}\n", teachers.as_slice().join(", ")).as_str());
+                output.push_str(
+                    format!("Teachers: {}\n", teachers.as_slice().join(", ")).as_str(),
+                );
             }
         }
 
         // Locations.
         if let Some(locations) = appointment.locations {
             if !locations.is_empty() {
-                output
-                    .push_str(format!("Locations: {}\n", locations.as_slice().join(", ")).as_str());
+                output.push_str(
+                    format!("Locations: {}\n", locations.as_slice().join(", ")).as_str(),
+                );
             }
         }
 
         // Groups.
         if let Some(groups) = appointment.groups {
             if !groups.is_empty() {
-                output.push_str(format!("Groups: {}\n", groups.as_slice().join(", ")).as_str());
+                output.push_str(
+                    format!("Groups: {}\n", groups.as_slice().join(", ")).as_str(),
+                );
             }
         }
 
@@ -140,8 +147,8 @@ impl Printer {
         }
 
         // Yellow if moved or modified or new.
-        if appointment.modified == Some(true) || appointment.new == Some(true)
-            || appointment.moved == Some(true)
+        if appointment.modified == Some(true) || appointment.new == Some(true) ||
+            appointment.moved == Some(true)
         {
             color = Color::Yellow;
         }

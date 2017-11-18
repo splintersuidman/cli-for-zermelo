@@ -19,7 +19,7 @@ const SECONDS_PER_DAY: i64 = 24 * 60 * 60;
 
 fn main() {
     // Clap settings.
-    let app = App::new("cli-for-zermelo")
+    let app = App::new("zermelo-cli")
         .version("0.2.0")
         .author("Splinter Suidman")
         .about("A command line application that shows you your schedule from Zermelo.")
@@ -80,11 +80,10 @@ fn main() {
 
     if let Some(config_file) = matches.value_of("config file") {
         // When config is specified.
-        let mut config = Config::parse_from_file(config_file)
-            .unwrap_or_else(|e| {
-                eprintln!("Error: could not parse config: {}.", e);
-                process::exit(1);
-            });
+        let mut config = Config::parse_from_file(config_file).unwrap_or_else(|e| {
+            eprintln!("Error: could not parse config: {}.", e);
+            process::exit(1);
+        });
 
         if let Some(access_token) = config.access_token {
             // If access token is present in config.
@@ -94,11 +93,10 @@ fn main() {
             // If temporary authentication code is present.
             let school = config.school;
 
-            schedule = Schedule::new(school.clone(), temp.auth_code)
-                .unwrap_or_else(|e| {
-                    eprintln!("Error while authenticating: {}.", e);
-                    process::exit(1);
-                });
+            schedule = Schedule::new(school.clone(), temp.auth_code).unwrap_or_else(|e| {
+                eprintln!("Error while authenticating: {}.", e);
+                process::exit(1);
+            });
 
             // Print access token.
             println!("Your access token is: {}", schedule.access_token);
@@ -109,11 +107,10 @@ fn main() {
                 access_token: Some(schedule.access_token.clone()),
                 temp: None,
             };
-            new_config.write_config(config_file)
-                .unwrap_or_else(|e| {
-                    eprintln!("Error: could not write config: {}.", e);
-                    process::exit(1);
-                });
+            new_config.write_config(config_file).unwrap_or_else(|e| {
+                eprintln!("Error: could not write config: {}.", e);
+                process::exit(1);
+            });
 
         } else {
             eprintln!("Error: access token and authentication code not present in config!");
@@ -127,11 +124,10 @@ fn main() {
         // When authentication code is specified.
         // School should be specified.
         if let Some(school) = matches.value_of("school") {
-            schedule = Schedule::new(school.to_owned(), code.to_owned())
-                .unwrap_or_else(|e| {
-                    eprintln!("Error while authenticating: {}.", e);
-                    process::exit(1);
-                });
+            schedule = Schedule::new(school.to_owned(), code.to_owned()).unwrap_or_else(|e| {
+                eprintln!("Error while authenticating: {}.", e);
+                process::exit(1);
+            });
 
             // Print access token.
             println!("Your access token is: {}", schedule.access_token);
@@ -144,12 +140,11 @@ fn main() {
     } else if let Some(access_token) = matches.value_of("access token") {
         // When access token is specified.
         // School should be specified.
-        let school = matches.value_of("school")
-            .unwrap_or_else(|| {
-                eprintln!("Error: retrieving schedule without school!");
-                eprintln!("Note: use `--school [your_school]` to specify your school.");
-                process::exit(1);
-            });
+        let school = matches.value_of("school").unwrap_or_else(|| {
+            eprintln!("Error: retrieving schedule without school!");
+            eprintln!("Note: use `--school [your_school]` to specify your school.");
+            process::exit(1);
+        });
         schedule = Schedule::with_access_token(school.to_owned(), access_token.to_owned());
     } else {
         eprintln!("Error: not enough arguments specified.");
@@ -159,13 +154,19 @@ fn main() {
 
     // Set times.
     let dt = Local::now();
-    let mut start = dt.with_hour(0).unwrap()
-        .with_minute(0).unwrap()
-        .with_second(0).unwrap()
+    let mut start = dt.with_hour(0)
+        .unwrap()
+        .with_minute(0)
+        .unwrap()
+        .with_second(0)
+        .unwrap()
         .timestamp();
-    let mut end = dt.with_hour(23).unwrap()
-        .with_minute(59).unwrap()
-        .with_second(59).unwrap()
+    let mut end = dt.with_hour(23)
+        .unwrap()
+        .with_minute(59)
+        .unwrap()
+        .with_second(59)
+        .unwrap()
         .timestamp();
 
     if matches.occurrences_of("tomorrow") > 0 {
@@ -200,7 +201,8 @@ fn main() {
     // Print appointments.
     let mut printer = Printer::new(hide_cancelled, show_invalid);
     for appointment in schedule.appointments {
-        printer.print_appointment(appointment)
-            .unwrap_or_else(|_| {});
+        printer.print_appointment(appointment).unwrap_or_else(
+            |_| {},
+        );
     }
 }
