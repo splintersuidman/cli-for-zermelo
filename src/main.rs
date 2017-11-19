@@ -20,7 +20,7 @@ const SECONDS_PER_DAY: i64 = 24 * 60 * 60;
 fn main() {
     // Clap settings.
     let app = App::new("cli-for-zermelo")
-        .version("0.2.0")
+        .version("0.2.1")
         .author("Splinter Suidman")
         .about("A command line application that shows you your schedule from Zermelo.")
         .arg(Arg::with_name("authentication code")
