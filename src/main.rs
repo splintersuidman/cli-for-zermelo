@@ -175,15 +175,21 @@ fn main() {
     } else if matches.occurrences_of("yesterday") > 0 {
         start -= SECONDS_PER_DAY;
         end -= SECONDS_PER_DAY;
-    } else if let Some(future_days) = matches.value_of("future days") {
+    } else if let Some(future_days) = matches.value_of("future day") {
         if let Ok(future_days) = future_days.trim().parse::<i64>() {
             start += future_days * SECONDS_PER_DAY;
             end += future_days * SECONDS_PER_DAY;
+        } else {
+            eprintln!("Could not parse days in the future");
+            process::exit(1);
         }
-    } else if let Some(past_days) = matches.value_of("past days") {
+    } else if let Some(past_days) = matches.value_of("past day") {
         if let Ok(past_days) = past_days.trim().parse::<i64>() {
             start -= past_days * SECONDS_PER_DAY;
             end -= past_days * SECONDS_PER_DAY;
+        } else {
+            eprintln!("Error: Could not parse days in the past.");
+            process::exit(1);
         }
     }
 
