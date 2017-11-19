@@ -109,7 +109,7 @@ dependencies = [
  "serde_derive 1.0.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "termcolor 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "toml 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "zermelo 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "zermelo 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -921,7 +921,7 @@ dependencies = [
 
 [[package]]
 name = "zermelo"
-version = "0.1.8"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "reqwest 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1042,4 +1042,4 @@ dependencies = [
 "checksum winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d315eee3b34aca4797b2da6b13ed88266e6d612562a0c46390af8299fc699bc"
 "checksum wincolor 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "a39ee4464208f6430992ff20154216ab2357772ac871d994c51628d60e58b8b0"
 "checksum ws2_32-sys 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "d59cefebd0c892fa2dd6de581e937301d8552cb44489cdff035c6187cb63fa5e"
-"checksum zermelo 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)" = "b046ad8e8326af085ebe307fa1687c9832b4414fece193fc3301ae039c2b57ed"
+"checksum zermelo 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "04b128658bb59c5584f2e1cd65289f0208107de756eba5a532bcc212c3f7ed8b"

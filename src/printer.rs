@@ -130,7 +130,7 @@ impl Printer {
         // Get appointment type.
         let appointment_type: AppointmentType;
         if let Some(t) = appointment.appointment_type {
-            if let Some(t) = AppointmentType::from_str(t.as_str()) {
+            if let Some(t) = AppointmentType::parse(t.as_str()) {
                 appointment_type = t;
             } else {
                 appointment_type = AppointmentType::Other;

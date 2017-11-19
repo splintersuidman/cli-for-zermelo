@@ -87,13 +87,13 @@ fn main() {
 
         if let Some(access_token) = config.access_token {
             // If access token is present in config.
-            schedule = Schedule::with_access_token(config.school, access_token);
+            schedule = Schedule::with_access_token(config.school.as_str(), access_token.as_str());
 
         } else if let Some(temp) = config.temp {
             // If temporary authentication code is present.
             let school = config.school;
 
-            schedule = Schedule::new(school.clone(), temp.auth_code).unwrap_or_else(|e| {
+            schedule = Schedule::new(school.as_str(), temp.auth_code.as_str()).unwrap_or_else(|e| {
                 eprintln!("Error while authenticating: {}.", e);
                 process::exit(1);
             });
@@ -124,7 +124,7 @@ fn main() {
         // When authentication code is specified.
         // School should be specified.
         if let Some(school) = matches.value_of("school") {
-            schedule = Schedule::new(school.to_owned(), code.to_owned()).unwrap_or_else(|e| {
+            schedule = Schedule::new(school, code).unwrap_or_else(|e| {
                 eprintln!("Error while authenticating: {}.", e);
                 process::exit(1);
             });
@@ -145,7 +145,7 @@ fn main() {
             eprintln!("Note: use `--school [your_school]` to specify your school.");
             process::exit(1);
         });
-        schedule = Schedule::with_access_token(school.to_owned(), access_token.to_owned());
+        schedule = Schedule::with_access_token(school, access_token);
     } else {
         eprintln!("Error: not enough arguments specified.");
         eprintln!("Note: use `--help` to get some help.");
