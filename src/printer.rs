@@ -49,7 +49,7 @@ impl Printer {
             // End time slot, only if it does not equal start time slot.
             if let Some(end_time_slot) = appointment.end_time_slot {
                 if end_time_slot != start_time_slot {
-                    output.push_str(format!("-{}", end_time_slot).as_str());
+                    output.push_str(format!("-{} ", end_time_slot).as_str());
                 }
             }
         }
@@ -66,7 +66,7 @@ impl Printer {
             } else {
                 format!("{}", minute)
             };
-            output.push_str(format!(" {}:{}", hour, minute).as_str());
+            output.push_str(format!("{}:{}", hour, minute).as_str());
 
             // End time, only if start time is set.
             if let Some(end) = appointment.end {
