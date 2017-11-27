@@ -8,7 +8,6 @@ extern crate termcolor;
 mod config;
 mod printer;
 
-use std::process;
 use config::Config;
 use printer::Printer;
 use chrono::prelude::*;
@@ -82,20 +81,20 @@ fn main() {
         // When config is specified.
         let mut config = Config::parse_from_file(config_file).unwrap_or_else(|e| {
             eprintln!("Error: could not parse config: {}.", e);
-            process::exit(1);
+            std::process::exit(1);
         });
 
         if let Some(access_token) = config.access_token {
             // If access token is present in config.
-            schedule = Schedule::with_access_token(config.school.as_str(), access_token.as_str());
+            schedule = Schedule::with_access_token(config.school, access_token);
 
         } else if let Some(temp) = config.temp {
             // If temporary authentication code is present.
             let school = config.school;
 
-            schedule = Schedule::new(school.as_str(), temp.auth_code.as_str()).unwrap_or_else(|e| {
+            schedule = Schedule::new(school.clone(), temp.auth_code).unwrap_or_else(|e| {
                 eprintln!("Error while authenticating: {}.", e);
-                process::exit(1);
+                std::process::exit(1);
             });
 
             // Print access token.
@@ -109,7 +108,7 @@ fn main() {
             };
             new_config.write_config(config_file).unwrap_or_else(|e| {
                 eprintln!("Error: could not write config: {}.", e);
-                process::exit(1);
+                std::process::exit(1);
             });
 
         } else {
@@ -118,7 +117,7 @@ fn main() {
             eprintln!("Note: `authentication_token = \"your_token\"` or");
             eprintln!("```\n[temp]");
             eprintln!("auth_code = \"your_auth_code\"\n```");
-            process::exit(1);
+            std::process::exit(1);
         }
     } else if let Some(code) = matches.value_of("authentication code") {
         // When authentication code is specified.
@@ -126,7 +125,7 @@ fn main() {
         if let Some(school) = matches.value_of("school") {
             schedule = Schedule::new(school, code).unwrap_or_else(|e| {
                 eprintln!("Error while authenticating: {}.", e);
-                process::exit(1);
+                std::process::exit(1);
             });
 
             // Print access token.
@@ -135,7 +134,7 @@ fn main() {
         } else {
             eprintln!("Error: authenticating without school!");
             eprintln!("Note: use `--school [your_school]` to specify your school.");
-            process::exit(1);
+            std::process::exit(1);
         }
     } else if let Some(access_token) = matches.value_of("access token") {
         // When access token is specified.
@@ -143,13 +142,13 @@ fn main() {
         let school = matches.value_of("school").unwrap_or_else(|| {
             eprintln!("Error: retrieving schedule without school!");
             eprintln!("Note: use `--school [your_school]` to specify your school.");
-            process::exit(1);
+            std::process::exit(1);
         });
         schedule = Schedule::with_access_token(school, access_token);
     } else {
         eprintln!("Error: not enough arguments specified.");
         eprintln!("Note: use `--help` to get some help.");
-        process::exit(1);
+        std::process::exit(1);
     }
 
     // Set times.
@@ -181,7 +180,7 @@ fn main() {
             end += future_days * SECONDS_PER_DAY;
         } else {
             eprintln!("Could not parse days in the future");
-            process::exit(1);
+            std::process::exit(1);
         }
     } else if let Some(past_days) = matches.value_of("past day") {
         if let Ok(past_days) = past_days.trim().parse::<i64>() {
@@ -189,7 +188,7 @@ fn main() {
             end -= past_days * SECONDS_PER_DAY;
         } else {
             eprintln!("Error: Could not parse days in the past.");
-            process::exit(1);
+            std::process::exit(1);
         }
     }
 

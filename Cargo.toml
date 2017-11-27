@@ -1,7 +1,7 @@
 [package]
 authors = ["Splinter Suidman"]
 name = "cli-for-zermelo"
-version = "0.2.1"
+version = "0.2.2"
 
 [dependencies]
 chrono = "0.4.0"
@@ -10,4 +10,4 @@ serde = "1.0.19"
 serde_derive = "1.0.19"
 termcolor = "0.3.3"
 toml = "0.4.5"
-zermelo = "0.2.1"
+zermelo = "0.3.0"
