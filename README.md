@@ -10,7 +10,7 @@ A command line application written in Rust that retrieves a schedule from Zermel
 - [Disclaimer](#disclaimer)
 
 # Installation
-[Install Rust](https://rustup.rs). Then run the following in your terminal:
+[Install Rust](https://www.rust-lang.org/en-US/). Then run the following in your terminal:
 
 ```bash
 git clone https://github.com/splintah/cli-for-zermelo.git
