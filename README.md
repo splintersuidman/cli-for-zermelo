@@ -1,17 +1,17 @@
 # cli-for-zermelo [![Build Status](https://travis-ci.org/splintah/cli-for-zermelo.svg?branch=master)](https://travis-ci.org/splintah/cli-for-zermelo)
-A command line application written in Rust that retrieves today's schedule from Zermelo.
+A command line application written in Rust that retrieves a schedule from Zermelo.
 
 # Installation
 [Install Rust](https://rustup.rs). Then run the following in your terminal:
 
 ```bash
-$ git clone https://github.com/splintah/cli-for-zermelo.git
-$ cd cli-for-zermelo
-$ cargo build --release
+git clone https://github.com/splintah/cli-for-zermelo.git
+cd cli-for-zermelo
+cargo build --release
 ```
 
 The executable is now located in `target/release/`.
-You may want to move this executable into a folder from your path.
+You may want to move this executable into a folder in your path.
 
 # Usage
 There are two ways to use this program:
@@ -21,7 +21,7 @@ There are two ways to use this program:
 The recommended way is to use a config file.
 
 # Config
-Create a config toml file somewhere, for example: `~/.cli-for-zermelo.toml`.
+Create a config toml file somewhere, for example: `~/.cli-for-zermelo.toml` (you don't have to specify the filetype, but it may be convenient for possible syntax highlighting).
 This file will contain your settings for this program.
 
 When you first want to authenticate, write the following in your config file, replacing your school and authentication code to the values found in the Zermelo Portal (Koppelingen -> Koppel App):
