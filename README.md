@@ -1,6 +1,14 @@
 # cli-for-zermelo [![Build Status](https://travis-ci.org/splintah/cli-for-zermelo.svg?branch=master)](https://travis-ci.org/splintah/cli-for-zermelo)
 A command line application written in Rust that retrieves a schedule from Zermelo.
 
+# Contents
+- [Contents](#contents)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Config](#config)
+- [Flags](#flags)
+- [Disclaimer](#disclaimer)
+
 # Installation
 [Install Rust](https://rustup.rs). Then run the following in your terminal:
 
